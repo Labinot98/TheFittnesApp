@@ -28,6 +28,10 @@ extension UIColor {
         return UIColor(red: 204/255, green: 44/255, blue: 44/255, alpha: 1.0)
     }
     
+    class var customGreen: UIColor {
+        return UIColor(red: 44/255, green: 204/255, blue: 100/255, alpha: 1.0)
+    }
+    
     class var customWhite: UIColor {
         return UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
     }

@@ -1,22 +1,22 @@
 //
-//  CardView.swift
+//  WorkoutCell.swift
 //  TheFitnessApp
 //
-//  Created by MacBook on 08/09/2020.
+//  Created by MacBook on 09/09/2020.
 //  Copyright © 2020 MacBook. All rights reserved.
 //
 
 import UIKit
-final class CardView: UIView {
+
+final class WorkoutCell: UITableViewCell {
     private let containerView = ContainerView()
     private let stackView = UIStackView()
     private let titleLabel = UILabel()
     private let timeLabel = LabelWithPostfix()
     private let exerciseLabel = LabelWithPostfix()
     
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
     }
     
@@ -24,36 +24,47 @@ final class CardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-
-    private func setupView() {
-        translatesAutoresizingMaskIntoConstraints = false
-        heightAnchor.constraint(equalToConstant: 180).isActive = true
+    // MARK: - Public
+    func set(model: WorkoutModel) {
+        titleLabel.text = model.title
+        let timeLabelModel = LabelWithPostfix.Model(title: "23", postFix: .min )
+        timeLabel.set(model: timeLabelModel)
         
-        setupContainerView()
-        setupStackView()
-        setupTitleLabel()
-        setupTimeLabel()
+        let exerciseLabelModel = LabelWithPostfix.Model(title: "11", postFix: .exercise )
+        exerciseLabel.set(model: exerciseLabelModel)
     }
+    
+       // MARK: - Private
+    private func setupView() {
+        backgroundColor = .clear
+        selectionStyle = .none
+       
+            setupContainerView()
+            setupStackView()
+            setupTitleLabel()
+            setupTimeLabel()
+    }
+    
     
     private func setupContainerView() {
         addSubview(containerView)
         
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        let top = containerView.topAnchor.constraint(equalTo: topAnchor)
-        let leading = containerView.leadingAnchor.constraint(equalTo: leadingAnchor)
-        let bottom = containerView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        let trailing = containerView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        let top = containerView.topAnchor.constraint(equalTo: topAnchor, constant: 15)
+        let leading = containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15)
+        let bottom = containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
+        let trailing = containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
         NSLayoutConstraint.activate([top, leading, bottom , trailing])
     }
     
     private func setupStackView() {
         containerView.addSubview(stackView)
         
-          stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         let height = stackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3)
-        let leading = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15)
-        let trailing = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
-         let centerY = stackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        let leading = stackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15)
+        let trailing = stackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15)
+        let centerY = stackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         NSLayoutConstraint.activate([height, centerY, leading, trailing])
         
         stackView.axis = .vertical
@@ -83,7 +94,7 @@ final class CardView: UIView {
             let leading = timeLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor)
             let height = timeLabel.heightAnchor.constraint(equalTo: container.heightAnchor)
             NSLayoutConstraint.activate([top, leading, height])
-             timeLabel.set(model: LabelWithPostfix.Model(title: "22", postFix: .min))
+            timeLabel.set(model: LabelWithPostfix.Model(title: "22", postFix: .min))
         }()
         
         let _ = {
@@ -97,20 +108,6 @@ final class CardView: UIView {
         }()
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
