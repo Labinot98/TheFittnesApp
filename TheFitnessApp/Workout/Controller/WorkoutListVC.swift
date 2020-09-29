@@ -97,6 +97,15 @@ extension WorkoutListVC: UITableViewDelegate {
         return 190
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let workout = workoutList.list[indexPath.row]
+        
+        let workoutDetailVC = ExerciseListVC(workout: workout)
+       navigationController?.pushViewController(workoutDetailVC, animated: true)
+        
+    }
+    
+    
     // Swipe cell
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         

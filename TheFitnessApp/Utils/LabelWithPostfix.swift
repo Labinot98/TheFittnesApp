@@ -46,7 +46,8 @@ final class LabelWithPostfix: UIView{
         label.translatesAutoresizingMaskIntoConstraints = false
         let top = label.topAnchor.constraint(equalTo: topAnchor)
         let leading  = label.leadingAnchor.constraint(equalTo: leadingAnchor)
-        NSLayoutConstraint.activate([top, leading])
+        let bottom = label.bottomAnchor.constraint(equalTo: bottomAnchor)
+        NSLayoutConstraint.activate([top, leading, bottom])
         
         label.textColor = .customRed
         label.font = .boldSystemFont(ofSize: 32)
@@ -75,6 +76,7 @@ extension LabelWithPostfix {
     
     enum Postfix: String {
         case min
+        case sec
         case exercise
     }
 }

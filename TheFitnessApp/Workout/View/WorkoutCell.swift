@@ -62,8 +62,8 @@ final class WorkoutCell: UITableViewCell {
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         let height = stackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 2/3)
-        let leading = stackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15)
-        let trailing = stackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15)
+        let leading = stackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 30)
+        let trailing = stackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -30)
         let centerY = stackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         NSLayoutConstraint.activate([height, centerY, leading, trailing])
         
@@ -92,8 +92,8 @@ final class WorkoutCell: UITableViewCell {
             timeLabel.translatesAutoresizingMaskIntoConstraints = false
             let top = timeLabel.topAnchor.constraint(equalTo: container.topAnchor)
             let leading = timeLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor)
-            let height = timeLabel.heightAnchor.constraint(equalTo: container.heightAnchor)
-            NSLayoutConstraint.activate([top, leading, height])
+           // let height = timeLabel.heightAnchor.constraint(equalTo: container.heightAnchor)
+            NSLayoutConstraint.activate([top, leading])
             timeLabel.set(model: LabelWithPostfix.Model(title: "22", postFix: .min))
         }()
         
@@ -101,8 +101,8 @@ final class WorkoutCell: UITableViewCell {
             self.exerciseLabel.translatesAutoresizingMaskIntoConstraints = false
             let top = exerciseLabel.topAnchor.constraint(equalTo: container.topAnchor)
             let leading = exerciseLabel.leadingAnchor.constraint(equalTo: self.timeLabel.trailingAnchor, constant: 15)
-            let height = exerciseLabel.heightAnchor.constraint(equalTo: container.heightAnchor)
-            NSLayoutConstraint.activate([top, leading, height])
+         //   let height = exerciseLabel.heightAnchor.constraint(equalTo: container.heightAnchor)
+            NSLayoutConstraint.activate([top, leading])
             
             exerciseLabel.set(model: LabelWithPostfix.Model(title: "8", postFix: .exercise))
         }()
