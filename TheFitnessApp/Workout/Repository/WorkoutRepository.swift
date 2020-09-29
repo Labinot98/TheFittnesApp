@@ -73,6 +73,13 @@ final class WorkoutRepository {
         return WorkoutModel(id: request.id, title: request.newTitle)
     }
     
+    // DELETE
+    func delete(request: DeleteWorkoutRequest) throws {
+        let workout = table.filter(id == request.id)
+       try db.run(workout.delete())
+        
+    }
+    
 }
 
 

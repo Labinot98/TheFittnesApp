@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class WorkoutVC: UIViewController {
+final class WorkoutListVC: UIViewController {
     private let workoutDispatcher = try? WorkoutDispatcher()
    private var safeArea: UILayoutGuide!
    private let tableView = UITableView()
@@ -92,26 +92,61 @@ final class WorkoutVC: UIViewController {
 
 }
 
-extension WorkoutVC: UITableViewDelegate {
+extension WorkoutListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 190
     }
     
+    // Swipe cell
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
        let workout = workoutList.list[indexPath.row]
         
-        let action = UIContextualAction(style: .normal, title: "Edit") { action, view, completion in
+       // Edit SWIPE
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { action, view, completion in
             self.navigationController?.pushViewController(CreateWorkoutVC(mode: .edit(workout)), animated: true)
+            completion(true)
         }
         
-        action.backgroundColor = .dimmedBlue
+        editAction.backgroundColor = .dimmedBlue
         
-        return UISwipeActionsConfiguration(actions: [action])
+        // DELETE SWIPE
+        let deleteAction = UIContextualAction(style: .normal, title: "❌") { action, view, completion in
+          
+            // delete from the database
+                guard let dispatcher = self.workoutDispatcher else {
+                    print("\(self): dispatcher was nil ")
+                    return
+            }
+            do {
+                let request =  DeleteWorkoutRequest(id: try workout.requireID())
+              let _ = try dispatcher.delete(request: request)
+            }catch {
+                print("Show Error Modal with message: \(error)")
+            }
+            
+            // delete from the datasource
+            guard let index = self.workoutList.list.firstIndex(where: { model in model.id == workout.id }) else {
+                
+                print("Show Error Modal: could find index")
+                self.setupData()
+                return
+            }
+            
+           self.workoutList.list.remove(at: index)
+            
+            // delete from tableView
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.reloadData()
+        }
+        deleteAction.backgroundColor = .dimmedBlue
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction,editAction])
     }
     
 }
 
-extension WorkoutVC:UITableViewDataSource {
+extension WorkoutListVC:UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.workoutList.list.count
     }

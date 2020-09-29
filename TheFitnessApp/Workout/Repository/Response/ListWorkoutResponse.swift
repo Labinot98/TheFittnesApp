@@ -7,5 +7,5 @@
 //
 
 struct ListWorkoutResponse {
-    let list: [WorkoutModel]
+    var list: [WorkoutModel]
 }

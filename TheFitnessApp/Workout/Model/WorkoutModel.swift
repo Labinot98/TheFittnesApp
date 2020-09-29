@@ -15,4 +15,15 @@ struct WorkoutModel {
         self.id = id
         self.title = title
     }
+    
+    func requireID() throws -> Int64 {
+        guard let id = id else {
+            throw WorkoutError.idWasNil
+        }
+        return id
+    }
+    
+    enum WorkoutError: Error {
+        case idWasNil
+    }
 }

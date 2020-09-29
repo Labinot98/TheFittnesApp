@@ -22,8 +22,10 @@
 		FA1C5AE3251FAC8F0034E0F5 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5AE2251FAC8F0034E0F5 /* UIView+Shadow.swift */; };
 		FA1C5AE5252223090034E0F5 /* UpdateWorkoutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5AE4252223090034E0F5 /* UpdateWorkoutRequest.swift */; };
 		FA1C5AE7252227FE0034E0F5 /* UpdateWorkoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5AE6252227FE0034E0F5 /* UpdateWorkoutResponse.swift */; };
+		FA1C5AE9252239FC0034E0F5 /* DeleteWorkoutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5AE8252239FC0034E0F5 /* DeleteWorkoutRequest.swift */; };
+		FA1C5AEB25223A210034E0F5 /* DeleteWorkoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5AEA25223A210034E0F5 /* DeleteWorkoutResponse.swift */; };
 		FA74BE0C25069834008E74FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA74BE0B25069834008E74FB /* AppDelegate.swift */; };
-		FA74BE0E25069834008E74FB /* WorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA74BE0D25069834008E74FB /* WorkoutVC.swift */; };
+		FA74BE0E25069834008E74FB /* WorkoutListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA74BE0D25069834008E74FB /* WorkoutListVC.swift */; };
 		FA74BE1325069837008E74FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA74BE1225069837008E74FB /* Assets.xcassets */; };
 		FA74BE1625069837008E74FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA74BE1425069837008E74FB /* LaunchScreen.storyboard */; };
 		FA74BE23250776D6008E74FB /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA74BE22250776D6008E74FB /* UIColor+Custom.swift */; };
@@ -52,9 +54,11 @@
 		FA1C5AE2251FAC8F0034E0F5 /* UIView+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		FA1C5AE4252223090034E0F5 /* UpdateWorkoutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateWorkoutRequest.swift; sourceTree = "<group>"; };
 		FA1C5AE6252227FE0034E0F5 /* UpdateWorkoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateWorkoutResponse.swift; sourceTree = "<group>"; };
+		FA1C5AE8252239FC0034E0F5 /* DeleteWorkoutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteWorkoutRequest.swift; sourceTree = "<group>"; };
+		FA1C5AEA25223A210034E0F5 /* DeleteWorkoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteWorkoutResponse.swift; sourceTree = "<group>"; };
 		FA74BE0825069834008E74FB /* TheFitnessApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheFitnessApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA74BE0B25069834008E74FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FA74BE0D25069834008E74FB /* WorkoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutVC.swift; sourceTree = "<group>"; };
+		FA74BE0D25069834008E74FB /* WorkoutListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListVC.swift; sourceTree = "<group>"; };
 		FA74BE1225069837008E74FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA74BE1525069837008E74FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA74BE1725069837008E74FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 			children = (
 				FA0B768D250B60630098103F /* CreateWorkoutRequest.swift */,
 				FA1C5AE4252223090034E0F5 /* UpdateWorkoutRequest.swift */,
+				FA1C5AE8252239FC0034E0F5 /* DeleteWorkoutRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -144,6 +149,7 @@
 			children = (
 				FA1C5AD8251B25C50034E0F5 /* CreateWorkoutResponse.swift */,
 				FA1C5AE6252227FE0034E0F5 /* UpdateWorkoutResponse.swift */,
+				FA1C5AEA25223A210034E0F5 /* DeleteWorkoutResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -197,7 +203,7 @@
 		FA74BE1E25069E15008E74FB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				FA74BE0D25069834008E74FB /* WorkoutVC.swift */,
+				FA74BE0D25069834008E74FB /* WorkoutListVC.swift */,
 				FA1C5ADC251CEC020034E0F5 /* CreateWorkoutVC.swift */,
 			);
 			path = Controller;
@@ -358,13 +364,15 @@
 				FA74BE292508A1E9008E74FB /* LabelWithPostfix.swift in Sources */,
 				FA1C5AD9251B25C50034E0F5 /* CreateWorkoutResponse.swift in Sources */,
 				FA0B769625151C800098103F /* MockDataManager.swift in Sources */,
+				FA1C5AE9252239FC0034E0F5 /* DeleteWorkoutRequest.swift in Sources */,
 				FA74BE2B2508EDDE008E74FB /* WorkoutCell.swift in Sources */,
 				FA0B7689250A81FA0098103F /* WorkoutRepository.swift in Sources */,
 				FA0B76922514E84B0098103F /* WorkoutResonse.swift in Sources */,
 				FA74BE272507941B008E74FB /* ContainerView.swift in Sources */,
+				FA1C5AEB25223A210034E0F5 /* DeleteWorkoutResponse.swift in Sources */,
 				FA1C5ADD251CEC020034E0F5 /* CreateWorkoutVC.swift in Sources */,
 				FA1C5AE1251F3F5E0034E0F5 /* TextField.swift in Sources */,
-				FA74BE0E25069834008E74FB /* WorkoutVC.swift in Sources */,
+				FA74BE0E25069834008E74FB /* WorkoutListVC.swift in Sources */,
 				FA0B768E250B60630098103F /* CreateWorkoutRequest.swift in Sources */,
 				FA1C5AE3251FAC8F0034E0F5 /* UIView+Shadow.swift in Sources */,
 				FA0B76902514E81C0098103F /* ListWorkoutResponse.swift in Sources */,

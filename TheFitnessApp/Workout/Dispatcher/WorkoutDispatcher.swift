@@ -39,6 +39,13 @@ struct WorkoutDispatcher {
       let persistedModel = try workoutRepository.update(request: request)
         return UpdateWorkoutResponse(title: persistedModel.title)
     }
+    
+    // Delete a qorkout based on id.
+    func delete(request: DeleteWorkoutRequest) throws -> DeleteWorkoutResponse {
+       try workoutRepository.delete(request: request)
+        return DeleteWorkoutResponse()
+    }
+    
 }
 
 extension WorkoutDispatcher {
