@@ -15,8 +15,8 @@ struct MockDataManager {
     
     // Mi merr te gjitha ato krijime qi ikemi bo te workout table
         for number in 1...amount {
-            let model = WorkoutModel(title: "\(number) - Labinot Pajaziti")
-            guard (try? dbManager.workoutRepository.insert(model: model)) != nil else {
+            let request = CreateWorkoutRequest(title: "\(number) - Labinot Pajaziti")
+            guard (try? dbManager.workoutRepository.insert(request: request)) != nil else {
                 print("Couldn't insert into workout table")
                 return
             }

@@ -168,11 +168,6 @@ extension CreateWorkoutVC: SaveCancelButtonDelegate {
             case .edit(_): updateWorkout(title: title)
             }
             
-//            if self.mode == Mode.create {
-//                createWorkout(title: title)
-//            }else {
-//                editWorkout()
-//            }
             
             navigationController?.popViewController(animated: true)
         }

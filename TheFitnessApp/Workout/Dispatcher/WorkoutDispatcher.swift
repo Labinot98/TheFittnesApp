@@ -22,9 +22,9 @@ struct WorkoutDispatcher {
     
     // Create A WORKOUT .   CREATE
     func create(request: CreateWorkoutRequest) throws -> CreateWorkoutResponse {
-        let model = WorkoutModel(title: request.title)
-       let persistedModel = try workoutRepository.insert(model: model)
         
+//        let request = CreateWorkoutRequest(title: request.title)
+       let persistedModel = try workoutRepository.insert(request: request)
         return CreateWorkoutResponse(workout: persistedModel)
     }
     

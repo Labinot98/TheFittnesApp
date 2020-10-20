@@ -131,7 +131,9 @@ extension WorkoutListVC: UITableViewDelegate {
                 let request =  DeleteWorkoutRequest(id: try workout.requireID())
               let _ = try dispatcher.delete(request: request)
             }catch {
+                completion(false)
                 print("Show Error Modal with message: \(error)")
+                return
             }
             
             // delete from the datasource
@@ -146,6 +148,7 @@ extension WorkoutListVC: UITableViewDelegate {
             
             // delete from tableView
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            completion(true)
             tableView.reloadData()
         }
         deleteAction.backgroundColor = .dimmedBlue

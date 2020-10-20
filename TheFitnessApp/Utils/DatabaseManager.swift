@@ -15,9 +15,9 @@ final class DatabaseManager {
     static let `default` = try? DatabaseManager()
     
     let workoutRepository: WorkoutRepository
+    let exerciseRepository: ExerciseRepository
     
     init() throws {
-//        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         guard
             let path = FileManager
                 .default
@@ -32,9 +32,11 @@ final class DatabaseManager {
         print(db.description)
         //Dropping all tables
        try WorkoutRepository.dropTable(in: db)
+        try ExerciseRepository.dropTable(in: db)
         
         // Createing all tables
         workoutRepository = try WorkoutRepository(db: db)
+        exerciseRepository = try ExerciseRepository(db: db)
     }
     
     
@@ -43,6 +45,7 @@ final class DatabaseManager {
 extension DatabaseManager {
     enum DatabaseError: Error {
         case couldNotFindPathToCreateADatabaseFileIn
+         case couldNotGetDatabaseManagerInstance
     }
 }
 

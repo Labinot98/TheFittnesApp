@@ -13,7 +13,7 @@ class ExerciseCell: UITableViewCell {
     
     private let containerView = ContainerView()
      private let timeLabel = LabelWithPostfix()
-     private let nameLabel = UILabel()
+     private let titleLabel = UILabel()
    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -25,6 +25,12 @@ class ExerciseCell: UITableViewCell {
     }
     
     // MARK: - Public
+    func set(model: ExerciseModel) {
+        titleLabel.text = model.title
+        let timeLabelModel = LabelWithPostfix.Model(title: "23", postFix: .sec )
+        timeLabel.set(model: timeLabelModel)
+        
+    }
     
     // set function that will also set the timelabel etc...
     
@@ -62,16 +68,16 @@ class ExerciseCell: UITableViewCell {
     }
     
     private func setupNameLabel() {
-        containerView.addSubview(nameLabel)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        let leading = nameLabel.leadingAnchor.constraint(equalTo: timeLabel.trailingAnchor, constant: 15)
-        let centerY = nameLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+        containerView.addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        let leading = titleLabel.leadingAnchor.constraint(equalTo: timeLabel.trailingAnchor, constant: 15)
+        let centerY = titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         NSLayoutConstraint.activate([leading, centerY])
         
-        nameLabel.text = "Bicyle"
-        nameLabel.textColor = .customWhite
-        nameLabel.font = .systemFont(ofSize: 32)
-        nameLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.text = "Bicyle"
+        titleLabel.textColor = .customWhite
+        titleLabel.font = .systemFont(ofSize: 32)
+        titleLabel.adjustsFontSizeToFitWidth = true
     }
     
 }

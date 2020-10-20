@@ -10,10 +10,10 @@ import UIKit
 
 final class ExerciseListVC: UIViewController {
     
-    
+    private let exerciseDispatcher = try? ExerciseDispatcher()
     private var safeArea: UILayoutGuide!
     private let tableView = UITableView()
-    private let list = ["Pashant", "Labinot", "Sara", "Ios Dev", "Rocky"]
+    private var exerciseList = ListExerciseResponse(list: [])
     
     let workout: WorkoutModel
     
@@ -26,10 +26,15 @@ final class ExerciseListVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+             setupView()
         self.tableView.separatorStyle = .none
-        setupView()
     }
     
     private func setupView() {
@@ -51,6 +56,8 @@ final class ExerciseListVC: UIViewController {
         navigationItem.rightBarButtonItem = addButton
     }
     
+    
+    
     private func setupTableView() {
         view.addSubview(tableView)
         
@@ -68,20 +75,57 @@ final class ExerciseListVC: UIViewController {
         tableView.delegate = self
     }
     
+    // MARK: - Logic
+    private func setupData() {
+        guard let dispatcher = exerciseDispatcher else {
+            print("\(self): dispatcehr was nil.")
+            return
+        }
+        guard let workoutId = try? workout.requireID() else {
+            print("\(self): workout id was nil.")
+            return
+        }
+        
+        let request = ListExerciseRequest(workoutId: workoutId)
+        exerciseList = dispatcher.list(request: request)
+        tableView.reloadData()
+    }
+    
     @objc func addAction() {
-        print("Addedddd")
+        guard let dispatcher = exerciseDispatcher else {
+            print("\(self): dispatcher was nil.")
+            return
+        }
+        
+        guard let workoutId = try? workout.requireID() else {
+            print("\(self): workout id was nil.")
+            return
+        }
+        
+       let request = CreateExerciseRequest(workoutId: workoutId, title: "This is a test!")
+        do {
+       try dispatcher.create(request: request)
+            print(request)
+        } catch {
+            print(error)
+        }
+        
     }
 }
 
 extension ExerciseListVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return exerciseList.list.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellid", for: indexPath)
-        let name = list[indexPath.row]
-        cell.textLabel?.text = name
+        guard let exerciseCell = cell as? ExerciseCell else { return cell}
+        
+        
+        let model = exerciseList.list[indexPath.row]
+        exerciseCell.set(model: model)
         return cell
     }
 }
