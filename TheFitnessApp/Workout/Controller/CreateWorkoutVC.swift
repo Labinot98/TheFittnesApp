@@ -10,8 +10,11 @@ import UIKit
 
 final class CreateWorkoutVC: UIViewController {
     private var safeArea: UILayoutGuide!
-    private let titleLabel = UILabel()
-    private let nameTF = TextField(padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+    
+    private let nameTextField = NeuTextField(title: "Name")
+//    private let titleLabel = UILabel()
+//    private let nameTF = TextField(padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+    
     private let saveCancelButton = SaveCancelButtons()
     private let workoutDispatcher = try? WorkoutDispatcher()
     
@@ -30,7 +33,7 @@ final class CreateWorkoutVC: UIViewController {
         case .create: ()
         case .edit(let workoutModel):
             self.workoutModel = workoutModel
-            nameTF.text = workoutModel.title
+            nameTextField.set(title: workoutModel.title)
         }
           super.init(nibName: nil, bundle: nil)
     }
@@ -49,7 +52,7 @@ final class CreateWorkoutVC: UIViewController {
         safeArea = view.layoutMarginsGuide
         view.backgroundColor = .dimmedBlue
         setupNavigation()
-        setupTitleLabel()
+       
         setupNameTextField()
         setupSaveCancelButtons()
     }
@@ -62,40 +65,30 @@ final class CreateWorkoutVC: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.customWhite]
     }
     
-    private func setupTitleLabel(){
-        view.addSubview(titleLabel)
-        
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        let top = titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 30)
-        let leading = titleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor)
-        let trailing = titleLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
-        NSLayoutConstraint.activate([top, leading, trailing])
-        
-        titleLabel.text = "Name"
-        titleLabel.textColor = .customWhite
-        titleLabel.font = .boldSystemFont(ofSize: 24)
-        
-    }
+//    private func setupTitleLabel(){
+//        view.addSubview(titleLabel)
+//
+//        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+//        let top = titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 30)
+//        let leading = titleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor)
+//        let trailing = titleLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
+//        NSLayoutConstraint.activate([top, leading, trailing])
+//
+//        titleLabel.text = "Name"
+//        titleLabel.textColor = .customWhite
+//        titleLabel.font = .boldSystemFont(ofSize: 24)
+//
+//    }
     
     private func setupNameTextField() {
         
-        view.addSubview(nameTF)
+        view.addSubview(nameTextField)
         
-        nameTF.translatesAutoresizingMaskIntoConstraints = false
-        let top = nameTF.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10)
-        let leading = nameTF.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
-        let trailing = nameTF.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
-        let height = nameTF.heightAnchor.constraint(equalToConstant: 60)
-        NSLayoutConstraint.activate([top, leading, trailing, height])
-        
-//        nameTF.backgroundColor = .customWhite
-        nameTF.layer.cornerRadius = 10
-        nameTF.font = .systemFont(ofSize: 26)
-        nameTF.textColor = .customWhite
-//        nameTF.placeholder = "Type Exercise"
-//        nameTF.attributedPlaceholder = NSAttributedString(string: "Type Exercise", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-        nameTF.returnKeyType = .done
-        nameTF.delegate = self
+        nameTextField.translatesAutoresizingMaskIntoConstraints = false
+        let top = nameTextField.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 30)
+        let leading = nameTextField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor)
+        let trailing = nameTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
+        NSLayoutConstraint.activate([top, leading, trailing])
         
     }
     
@@ -160,7 +153,7 @@ extension CreateWorkoutVC: SaveCancelButtonDelegate {
     }
     
     func onSave() {
-        if let title = nameTF.text, !title.isEmpty {
+        if let title = nameTextField.text, !title.isEmpty {
             print(" ✅ Persisted to database")
             
             switch mode {

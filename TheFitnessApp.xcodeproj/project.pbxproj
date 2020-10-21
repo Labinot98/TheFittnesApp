@@ -32,6 +32,8 @@
 		FA1C5B01252723390034E0F5 /* ListExerciseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5B00252723390034E0F5 /* ListExerciseResponse.swift */; };
 		FA1C5B03252723720034E0F5 /* ListExerciseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5B02252723720034E0F5 /* ListExerciseRequest.swift */; };
 		FA1C5B0525272C0A0034E0F5 /* CreateExerciseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5B0425272C0A0034E0F5 /* CreateExerciseResponse.swift */; };
+		FA1C5B43253F29850034E0F5 /* NeuTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5B42253F29850034E0F5 /* NeuTextField.swift */; };
+		FA1C5B452540484D0034E0F5 /* CreateExerciseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5B442540484D0034E0F5 /* CreateExerciseVC.swift */; };
 		FA74BE0C25069834008E74FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA74BE0B25069834008E74FB /* AppDelegate.swift */; };
 		FA74BE0E25069834008E74FB /* WorkoutListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA74BE0D25069834008E74FB /* WorkoutListVC.swift */; };
 		FA74BE1325069837008E74FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA74BE1225069837008E74FB /* Assets.xcassets */; };
@@ -72,6 +74,8 @@
 		FA1C5B00252723390034E0F5 /* ListExerciseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExerciseResponse.swift; sourceTree = "<group>"; };
 		FA1C5B02252723720034E0F5 /* ListExerciseRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExerciseRequest.swift; sourceTree = "<group>"; };
 		FA1C5B0425272C0A0034E0F5 /* CreateExerciseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExerciseResponse.swift; sourceTree = "<group>"; };
+		FA1C5B42253F29850034E0F5 /* NeuTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuTextField.swift; sourceTree = "<group>"; };
+		FA1C5B442540484D0034E0F5 /* CreateExerciseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExerciseVC.swift; sourceTree = "<group>"; };
 		FA74BE0825069834008E74FB /* TheFitnessApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheFitnessApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA74BE0B25069834008E74FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA74BE0D25069834008E74FB /* WorkoutListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListVC.swift; sourceTree = "<group>"; };
@@ -171,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				FA1C5AEC25232CE60034E0F5 /* ExerciseListVC.swift */,
+				FA1C5B442540484D0034E0F5 /* CreateExerciseVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -223,6 +228,18 @@
 				FA1C5B0425272C0A0034E0F5 /* CreateExerciseResponse.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		FA1C5B41253F28F20034E0F5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FA1C5AE0251F3F5E0034E0F5 /* TextField.swift */,
+				FA1C5ADE251DD6AC0034E0F5 /* SaveCancelButtons.swift */,
+				FA74BE282508A1E9008E74FB /* LabelWithPostfix.swift */,
+				FA74BE262507941B008E74FB /* ContainerView.swift */,
+				FA1C5B42253F29850034E0F5 /* NeuTextField.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		FA74BDFF25069834008E74FB = {
@@ -300,12 +317,9 @@
 		FA74BE21250776BC008E74FB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				FA1C5B41253F28F20034E0F5 /* View */,
 				FA74BED9250A1277008E74FB /* DatabaseManager.swift */,
 				FA74BE22250776D6008E74FB /* UIColor+Custom.swift */,
-				FA74BE262507941B008E74FB /* ContainerView.swift */,
-				FA74BE282508A1E9008E74FB /* LabelWithPostfix.swift */,
-				FA1C5ADE251DD6AC0034E0F5 /* SaveCancelButtons.swift */,
-				FA1C5AE0251F3F5E0034E0F5 /* TextField.swift */,
 				FA1C5AE2251FAC8F0034E0F5 /* UIView+Shadow.swift */,
 			);
 			path = Utils;
@@ -458,10 +472,12 @@
 				FA1C5AE5252223090034E0F5 /* UpdateWorkoutRequest.swift in Sources */,
 				FA0B76942514EB030098103F /* ListWorkoutRequest.swift in Sources */,
 				FA1C5AE7252227FE0034E0F5 /* UpdateWorkoutResponse.swift in Sources */,
+				FA1C5B452540484D0034E0F5 /* CreateExerciseVC.swift in Sources */,
 				FA74BE0C25069834008E74FB /* AppDelegate.swift in Sources */,
 				FA1C5AFB2524A1B00034E0F5 /* ExerciseModel.swift in Sources */,
 				FA1C5B03252723720034E0F5 /* ListExerciseRequest.swift in Sources */,
 				FA74BE23250776D6008E74FB /* UIColor+Custom.swift in Sources */,
+				FA1C5B43253F29850034E0F5 /* NeuTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
