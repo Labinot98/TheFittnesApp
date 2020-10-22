@@ -32,6 +32,13 @@ struct ExerciseDispatcher {
         return ListExerciseResponse(list: list)
     }
     
+    
+    // Delete an exercise.
+    func delete(request: DeleteExerciseRequest) throws -> DeleteExerciseResponse {
+        try exerciseRepository.delete(request: request)
+        return DeleteExerciseResponse()
+    }
+
 }
 
 // mund mebo edhe ktu po ekom bo errorin tek reposistory

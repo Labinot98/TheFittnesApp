@@ -47,7 +47,7 @@ final class NeuTextField: UIView {
         let trailing = titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         NSLayoutConstraint.activate([top, leading, trailing])
         
-        titleLabel.text = "Name"
+//        titleLabel.text = "Name"
         titleLabel.textColor = .customWhite
         titleLabel.font = .boldSystemFont(ofSize: 24)
         

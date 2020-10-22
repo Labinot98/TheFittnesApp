@@ -92,23 +92,13 @@ final class ExerciseListVC: UIViewController {
     }
     
     @objc func addAction() {
-        guard let dispatcher = exerciseDispatcher else {
-            print("\(self): dispatcher was nil.")
-            return
-        }
-        
         guard let workoutId = try? workout.requireID() else {
-            print("\(self): workout id was nil.")
+            print("\(self): workout id was nil")
             return
         }
         
-       let request = CreateExerciseRequest(workoutId: workoutId, title: "This is a test!")
-        do {
-       try dispatcher.create(request: request)
-            print(request)
-        } catch {
-            print(error)
-        }
+        let vc = CreateExerciseVC(workoutId: workoutId)
+        navigationController?.pushViewController(vc, animated: true)
         
     }
 }
@@ -134,6 +124,49 @@ extension ExerciseListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
+    
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+          let exercise = exerciseList.list[indexPath.row]
+        // DELETE SWIPE
+        let deleteAction = UIContextualAction(style: .normal, title: "❌") { action, view, completion in
+           
+            // delete from the database
+            guard let dispatcher = self.exerciseDispatcher else {
+                print("\(self): dispatcher was nil ")
+                return
+            }
+            do {
+                let request =  DeleteExerciseRequest(exerciseId: try exercise.requireID())
+                let _ = try dispatcher.delete(request: request)
+            }catch {
+                completion(false)
+                print("Show Error Modal with message: \(error)")
+                return
+            }
+            
+            // delete from the datasource
+            guard let index = self.exerciseList.list.firstIndex(where: { model in model.id == exercise.id }) else {
+                
+                print("Show Error Modal: could find index")
+                self.setupData()
+                return
+            }
+            
+            self.exerciseList.list.remove(at: index)
+            
+            // delete from tableView
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            completion(true)
+            tableView.reloadData()
+            
+        }
+        deleteAction.backgroundColor = .dimmedBlue
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
 }
 
 

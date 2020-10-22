@@ -27,7 +27,7 @@ class ExerciseCell: UITableViewCell {
     // MARK: - Public
     func set(model: ExerciseModel) {
         titleLabel.text = model.title
-        let timeLabelModel = LabelWithPostfix.Model(title: "23", postFix: .sec )
+        let timeLabelModel = LabelWithPostfix.Model(title: model.time.description, postFix: .sec )
         timeLabel.set(model: timeLabelModel)
         
     }
@@ -63,8 +63,6 @@ class ExerciseCell: UITableViewCell {
         let leading = timeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 30)
         let centerY = timeLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         NSLayoutConstraint.activate([leading, centerY])
-        
-        timeLabel.set(model: LabelWithPostfix.Model(title: "45", postFix: .sec))
     }
     
     private func setupNameLabel() {
@@ -74,7 +72,6 @@ class ExerciseCell: UITableViewCell {
         let centerY = titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         NSLayoutConstraint.activate([leading, centerY])
         
-        titleLabel.text = "Bicyle"
         titleLabel.textColor = .customWhite
         titleLabel.font = .systemFont(ofSize: 32)
         titleLabel.adjustsFontSizeToFitWidth = true

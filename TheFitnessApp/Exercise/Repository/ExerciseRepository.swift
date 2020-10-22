@@ -16,7 +16,7 @@ final class ExerciseRepository {
     static let id = Expression<Int64>("id")
     static let workoutId = Expression<Int64>("workout_id")
     static let title = Expression<String>("title")
-    
+    static let time = Expression<Int>("time")
     
     static func dropTable(in db: Connection)throws{
         try db.execute("DROP TABLE  IF EXISTS '\(ExerciseModel.tableName)'")
@@ -35,8 +35,10 @@ final class ExerciseRepository {
             table.column(
                 ExerciseRepository.workoutId,
                 references: WorkoutRepository.table,
-                WorkoutRepository.id)
+                WorkoutRepository.id
+            )
             table.column(ExerciseRepository.title)
+            table.column(ExerciseRepository.time)
         })
         print( "Created Table (If it didnt exists): \(ExerciseModel.tableName)" )
     }
@@ -48,7 +50,8 @@ final class ExerciseRepository {
     func insert(request: CreateExerciseRequest) throws -> ExerciseModel {
         let insert = ExerciseRepository.table.insert(
             ExerciseRepository.workoutId <- request.workoutId,
-            ExerciseRepository.title <- request.title
+            ExerciseRepository.title <- request.title,
+            ExerciseRepository.time <- request.time
         )
         
         let rowId = try db.run(insert)
@@ -56,7 +59,9 @@ final class ExerciseRepository {
         return ExerciseModel(
             id: rowId,
             workoutId: request.workoutId,
-            title: request.title)
+            title: request.title,
+            time: request.time
+        )
     }
     
     // LIST
@@ -67,7 +72,8 @@ final class ExerciseRepository {
                 return ExerciseModel(
                     id: exercise[ExerciseRepository.id],
                     workoutId: exercise[ExerciseRepository.workoutId],
-                    title: exercise[ExerciseRepository.title]
+                    title: exercise[ExerciseRepository.title],
+                    time: exercise[ExerciseRepository.time]
                 )
             
             }
@@ -76,6 +82,13 @@ final class ExerciseRepository {
             print("\(self)Could't get list of \(ExerciseRepository.self) from the database ")
             return []
         }
+    }
+    
+    // DELETE
+    func delete(request: DeleteExerciseRequest) throws {
+        let exercise = ExerciseRepository.table.filter(ExerciseRepository.id == request.exerciseId)
+        try db.run(exercise.delete())
+        
     }
     
 }
