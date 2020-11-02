@@ -10,11 +10,7 @@ import UIKit
 
 final class CreateWorkoutVC: UIViewController {
     private var safeArea: UILayoutGuide!
-    
     private let nameTextField = NeuTextField(title: "Name")
-//    private let titleLabel = UILabel()
-//    private let nameTF = TextField(padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
-    
     private let saveCancelButton = SaveCancelButtons()
     private let workoutDispatcher = try? WorkoutDispatcher()
     

@@ -11,12 +11,17 @@ import UIKit
 final class NeuTextField: UIView {
     var text: String?
     
+    private var minutes = 0
+    private var seconds = 0
+    
     private let titleLabel = UILabel()
-    private let nameTF = TextField(padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+    private let nameTF = TextField()
+    
+    
     
     init(title: String) {
-        super.init(frame: .zero)
         self.titleLabel.text = title
+        super.init(frame: .zero)
         setupView()
     }
     
