@@ -8,6 +8,7 @@
 
 struct CreateExerciseRequest {
     let workoutId: Int64
-    let title: String
-    let time: Int
+    var title: String
+    var min: Int
+    var sec: Int
 }

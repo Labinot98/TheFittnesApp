@@ -12,7 +12,8 @@ class ExerciseCell: UITableViewCell {
     
     
     private let containerView = ContainerView()
-     private let timeLabel = LabelWithPostfix()
+     private let minLabel = LabelWithPostfix()
+    private let  secLabel = LabelWithPostfix()
      private let titleLabel = UILabel()
    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -27,9 +28,12 @@ class ExerciseCell: UITableViewCell {
     // MARK: - Public
     func set(model: ExerciseModel) {
         titleLabel.text = model.title
-        let timeLabelModel = LabelWithPostfix.Model(title: model.time.description, postFix: .sec )
-        timeLabel.set(model: timeLabelModel)
         
+        let minLabelModel = LabelWithPostfix.Model(title: model.min.description, postFix: .min )
+        minLabel.set(model: minLabelModel)
+        
+        let secLabelModel = LabelWithPostfix.Model(title: model.sec.description, postFix: .sec)
+        secLabel.set(model: secLabelModel)
     }
     
     // set function that will also set the timelabel etc...
@@ -40,9 +44,9 @@ class ExerciseCell: UITableViewCell {
         selectionStyle = .none
         
         setupContainerView()
-        setupTimeLabel()
+        setupMinLabel()
+        setupSecLabel()
         setupNameLabel()
-        
     }
     
     private func setupContainerView() {
@@ -56,19 +60,29 @@ class ExerciseCell: UITableViewCell {
         NSLayoutConstraint.activate([top, leading, bottom , trailing])
     }
     
-    private func setupTimeLabel() {
-         containerView.addSubview(timeLabel)
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+    private func setupMinLabel() {
+         containerView.addSubview(minLabel)
+        minLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let leading = timeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 30)
-        let centerY = timeLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+        let leading = minLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 30)
+        let centerY = minLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+        NSLayoutConstraint.activate([leading, centerY])
+    }
+    
+    private func setupSecLabel() {
+        containerView.addSubview(secLabel)
+        
+        secLabel.translatesAutoresizingMaskIntoConstraints = false
+        let leading = secLabel.leadingAnchor.constraint(equalTo: minLabel.trailingAnchor, constant: 15)
+        let centerY = secLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         NSLayoutConstraint.activate([leading, centerY])
     }
     
     private func setupNameLabel() {
         containerView.addSubview(titleLabel)
+        
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        let leading = titleLabel.leadingAnchor.constraint(equalTo: timeLabel.trailingAnchor, constant: 15)
+        let leading = titleLabel.leadingAnchor.constraint(equalTo: secLabel.trailingAnchor, constant: 15)
         let centerY = titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         NSLayoutConstraint.activate([leading, centerY])
         

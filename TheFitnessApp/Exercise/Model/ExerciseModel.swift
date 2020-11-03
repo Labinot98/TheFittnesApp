@@ -11,13 +11,15 @@ final class ExerciseModel {
     let id: Int64?
     let workoutId: Int64
     let title: String
-    let time: Int
+    let min: Int
+    let sec: Int
     
-    init(id: Int64? = nil, workoutId: Int64, title: String, time: Int) {
+    init(id: Int64? = nil, workoutId: Int64, title: String, min: Int, sec: Int) {
         self.id = id
         self.workoutId = workoutId
         self.title = title
-        self.time = time
+        self.min = min
+        self.sec = sec
     }
     func requireID() throws -> Int64 {
         guard let id = id else {

@@ -47,6 +47,8 @@
 		FA74BE2D2508F8AC008E74FB /* WorkoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA74BE2C2508F8AC008E74FB /* WorkoutModel.swift */; };
 		FA74BEDA250A1277008E74FB /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA74BED9250A1277008E74FB /* DatabaseManager.swift */; };
 		FA9891EA25446FB500088AFC /* NeuTimeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9891E925446FB500088AFC /* NeuTimeTextField.swift */; };
+		FACFFEBE2550595300705D2A /* NeuTimeTextField+Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACFFEBD2550595300705D2A /* NeuTimeTextField+Tag.swift */; };
+		FACFFEC02550598C00705D2A /* NeuTimeTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACFFEBF2550598C00705D2A /* NeuTimeTextFieldDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +96,8 @@
 		FA74BE2C2508F8AC008E74FB /* WorkoutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutModel.swift; sourceTree = "<group>"; };
 		FA74BED9250A1277008E74FB /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		FA9891E925446FB500088AFC /* NeuTimeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuTimeTextField.swift; sourceTree = "<group>"; };
+		FACFFEBD2550595300705D2A /* NeuTimeTextField+Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NeuTimeTextField+Tag.swift"; sourceTree = "<group>"; };
+		FACFFEBF2550598C00705D2A /* NeuTimeTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuTimeTextFieldDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,12 +247,12 @@
 		FA1C5B41253F28F20034E0F5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FACFFEBC2550590D00705D2A /* NeuTimeTextField */,
 				FA1C5AE0251F3F5E0034E0F5 /* TextField.swift */,
 				FA1C5ADE251DD6AC0034E0F5 /* SaveCancelButtons.swift */,
 				FA74BE282508A1E9008E74FB /* LabelWithPostfix.swift */,
 				FA74BE262507941B008E74FB /* ContainerView.swift */,
 				FA1C5B42253F29850034E0F5 /* NeuTextField.swift */,
-				FA9891E925446FB500088AFC /* NeuTimeTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -332,6 +336,16 @@
 				FA1C5AE2251FAC8F0034E0F5 /* UIView+Shadow.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		FACFFEBC2550590D00705D2A /* NeuTimeTextField */ = {
+			isa = PBXGroup;
+			children = (
+				FA9891E925446FB500088AFC /* NeuTimeTextField.swift */,
+				FACFFEBD2550595300705D2A /* NeuTimeTextField+Tag.swift */,
+				FACFFEBF2550598C00705D2A /* NeuTimeTextFieldDelegate.swift */,
+			);
+			path = NeuTimeTextField;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -467,6 +481,7 @@
 				FA1C5AF925249F460034E0F5 /* ExerciseRepository.swift in Sources */,
 				FA0B7689250A81FA0098103F /* WorkoutRepository.swift in Sources */,
 				FA74BE272507941B008E74FB /* ContainerView.swift in Sources */,
+				FACFFEBE2550595300705D2A /* NeuTimeTextField+Tag.swift in Sources */,
 				FA1C5AEB25223A210034E0F5 /* DeleteWorkoutResponse.swift in Sources */,
 				FA1C5B01252723390034E0F5 /* ListExerciseResponse.swift in Sources */,
 				FA1C5ADD251CEC020034E0F5 /* CreateWorkoutVC.swift in Sources */,
@@ -484,6 +499,7 @@
 				FA1C5AE5252223090034E0F5 /* UpdateWorkoutRequest.swift in Sources */,
 				FA0B76942514EB030098103F /* ListWorkoutRequest.swift in Sources */,
 				FA1C5AE7252227FE0034E0F5 /* UpdateWorkoutResponse.swift in Sources */,
+				FACFFEC02550598C00705D2A /* NeuTimeTextFieldDelegate.swift in Sources */,
 				FA1C5B452540484D0034E0F5 /* CreateExerciseVC.swift in Sources */,
 				FA74BE0C25069834008E74FB /* AppDelegate.swift in Sources */,
 				FA1C5AFB2524A1B00034E0F5 /* ExerciseModel.swift in Sources */,

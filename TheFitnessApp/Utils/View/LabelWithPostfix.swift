@@ -23,7 +23,11 @@ final class LabelWithPostfix: UIView{
     }
     //MARK: - Public func
     func set(model: Model){
-        label.text = model.title
+        if let number = Int(model.title), number < 10 {
+            label.text = "0\(number)"
+        }else {
+          label.text = model.title
+        }
         postFixLabel.text = model.postFix.rawValue
     }
     

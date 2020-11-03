@@ -16,7 +16,8 @@ final class ExerciseRepository {
     static let id = Expression<Int64>("id")
     static let workoutId = Expression<Int64>("workout_id")
     static let title = Expression<String>("title")
-    static let time = Expression<Int>("time")
+    static let min = Expression<Int>("min")
+    static let sec = Expression<Int>("sec")
     
     static func dropTable(in db: Connection)throws{
         try db.execute("DROP TABLE  IF EXISTS '\(ExerciseModel.tableName)'")
@@ -38,7 +39,8 @@ final class ExerciseRepository {
                 WorkoutRepository.id
             )
             table.column(ExerciseRepository.title)
-            table.column(ExerciseRepository.time)
+            table.column(ExerciseRepository.min)
+            table.column(ExerciseRepository.sec)
         })
         print( "Created Table (If it didnt exists): \(ExerciseModel.tableName)" )
     }
@@ -51,7 +53,8 @@ final class ExerciseRepository {
         let insert = ExerciseRepository.table.insert(
             ExerciseRepository.workoutId <- request.workoutId,
             ExerciseRepository.title <- request.title,
-            ExerciseRepository.time <- request.time
+            ExerciseRepository.min <- request.min,
+            ExerciseRepository.sec <- request.sec
         )
         
         let rowId = try db.run(insert)
@@ -60,7 +63,8 @@ final class ExerciseRepository {
             id: rowId,
             workoutId: request.workoutId,
             title: request.title,
-            time: request.time
+            min: request.min,
+            sec: request.sec
         )
     }
     
@@ -73,7 +77,8 @@ final class ExerciseRepository {
                     id: exercise[ExerciseRepository.id],
                     workoutId: exercise[ExerciseRepository.workoutId],
                     title: exercise[ExerciseRepository.title],
-                    time: exercise[ExerciseRepository.time]
+                    min: exercise[ExerciseRepository.min],
+                    sec: exercise[ExerciseRepository.sec]
                 )
             
             }

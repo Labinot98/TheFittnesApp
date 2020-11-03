@@ -9,9 +9,10 @@
 import UIKit
 
 final class NeuTimeTextField: UIView {
+   weak var delegate: NeuTimeTextFieldDelegate?
+    
     private let minLabel = UILabel()
     private let minTF = TextField()
-    
     private let secLabel = UILabel()
     private let secTF = TextField()
     
@@ -59,6 +60,7 @@ final class NeuTimeTextField: UIView {
         minTF.text = "0"
         minTF.font = .boldSystemFont(ofSize: 28)
         minTF.textColor = .customWhite
+        minTF.isActionEnabled = false
         
         let minPicker = UIPickerView()
          minPicker.tag = Tag.min.rawValue
@@ -98,6 +100,7 @@ final class NeuTimeTextField: UIView {
         secTF.text = "0"
         secTF.font = .boldSystemFont(ofSize: 28)
         secTF.textColor = .customWhite
+        secTF.isActionEnabled = false
         
         let secPicker = UIPickerView()
         secPicker.tag = Tag.sec.rawValue
@@ -124,6 +127,16 @@ final class NeuTimeTextField: UIView {
         toolbar.sizeToFit()
         
         return toolbar
+    }
+    
+    private func handleValuesHaveChanged() {
+        guard let minText = minTF.text, let secText = secTF.text else { return }
+        let min = Int(minText ) ?? 0
+        let sec = Int(secText) ?? 0
+        
+        if let delegate = delegate {
+            delegate.valuesDidChange(to: min, sec: sec)
+        }
     }
     
 }
@@ -159,15 +172,11 @@ extension NeuTimeTextField: UIPickerViewDelegate {
         case Tag.sec.rawValue: secTF.text = (row * 5).description
         default: return
         }
+        
+        handleValuesHaveChanged()
     }
 }
 
-extension NeuTimeTextField {
-    enum Tag: Int {
-        case min
-        case sec
-    }
-}
 
 
 

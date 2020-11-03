@@ -9,12 +9,15 @@
 import UIKit
 
 final class TextField: UITextField {
-    var padding: UIEdgeInsets
+    /// Allows to perform copy , paste and other actions
+    var isActionEnabled = true
     
-    let topShadow = UIView()
-    let leftShadow = UIView()
-    let bottomShadow = UIView()
-    let rightShadow = UIView()
+   private var padding: UIEdgeInsets
+    
+   private let topShadow = UIView()
+   private let leftShadow = UIView()
+   private let bottomShadow = UIView()
+   private let rightShadow = UIView()
     
     init(padding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)) {
         self.padding = padding
@@ -104,6 +107,13 @@ final class TextField: UITextField {
         rightShadow.layer.backgroundColor = UIColor.lightShadow.cgColor
         rightShadow.layer.masksToBounds = false
     }
+    
+    // MARK: Logic
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return isActionEnabled
+    }
+    
 }
 
 // Padding
