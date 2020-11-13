@@ -11,4 +11,5 @@ struct CreateExerciseRequest {
     var title: String
     var min: Int
     var sec: Int
+    var kind: ExerciseModel.Kind
 }

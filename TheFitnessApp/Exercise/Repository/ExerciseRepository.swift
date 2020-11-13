@@ -18,6 +18,7 @@ final class ExerciseRepository {
     static let title = Expression<String>("title")
     static let min = Expression<Int>("min")
     static let sec = Expression<Int>("sec")
+    static let kind = Expression<String>("kind")
     
     static func dropTable(in db: Connection)throws{
         try db.execute("DROP TABLE  IF EXISTS '\(ExerciseModel.tableName)'")
@@ -41,6 +42,7 @@ final class ExerciseRepository {
             table.column(ExerciseRepository.title)
             table.column(ExerciseRepository.min)
             table.column(ExerciseRepository.sec)
+            table.column(ExerciseRepository.kind)
         })
         print( "Created Table (If it didnt exists): \(ExerciseModel.tableName)" )
     }
@@ -54,7 +56,8 @@ final class ExerciseRepository {
             ExerciseRepository.workoutId <- request.workoutId,
             ExerciseRepository.title <- request.title,
             ExerciseRepository.min <- request.min,
-            ExerciseRepository.sec <- request.sec
+            ExerciseRepository.sec <- request.sec,
+            ExerciseRepository.kind <- request.kind.rawValue
         )
         
         let rowId = try db.run(insert)
@@ -64,7 +67,8 @@ final class ExerciseRepository {
             workoutId: request.workoutId,
             title: request.title,
             min: request.min,
-            sec: request.sec
+            sec: request.sec,
+            kind: request.kind
         )
     }
     
@@ -73,12 +77,18 @@ final class ExerciseRepository {
         let query = ExerciseRepository.table.filter(ExerciseRepository.workoutId == request.workoutId)
         do {
             return try db.prepare(query).map { exercise in
+                
+                guard let kind = ExerciseModel.Kind(rawValue: exercise[ExerciseRepository.kind]) else {
+                    throw ExerciseModel.ExerciseError.unsuportedKind
+                }
+                
                 return ExerciseModel(
                     id: exercise[ExerciseRepository.id],
                     workoutId: exercise[ExerciseRepository.workoutId],
                     title: exercise[ExerciseRepository.title],
                     min: exercise[ExerciseRepository.min],
-                    sec: exercise[ExerciseRepository.sec]
+                    sec: exercise[ExerciseRepository.sec],
+                    kind: kind
                 )
             
             }

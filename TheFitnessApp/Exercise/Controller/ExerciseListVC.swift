@@ -34,7 +34,7 @@ final class ExerciseListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
              setupView()
-        self.tableView.separatorStyle = .none
+        
     }
     
     private func setupView() {
@@ -73,6 +73,7 @@ final class ExerciseListVC: UIViewController {
         tableView.register(ExerciseCell.self, forCellReuseIdentifier: "cellid")
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.separatorStyle = .none
     }
     
     // MARK: - Logic
@@ -113,15 +114,17 @@ extension ExerciseListVC: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellid", for: indexPath)
         guard let exerciseCell = cell as? ExerciseCell else { return cell}
         
-        
         let model = exerciseList.list[indexPath.row]
+         print("Done", model.kind)
         exerciseCell.set(model: model)
         return cell
     }
 }
 
 extension ExerciseListVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+   
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
     

@@ -11,11 +11,18 @@ import UIKit
 final class LabelWithPostfix: UIView{
     private let label = UILabel()
     private let postFixLabel = UILabel()
+    private var baseLineAdjustment: CGFloat
+    private let display: Display
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
+    init(labelSize: CGFloat = 32, postFixSize: CGFloat = 16, baseLineAdjustment: CGFloat = -4, display: Display = .lowerCase) {
+        self.label.font = .boldSystemFont(ofSize: labelSize)
+        self.postFixLabel.font = .boldSystemFont(ofSize: CGFloat(postFixSize))
+        self.baseLineAdjustment = baseLineAdjustment
+        self.display = display
         
+        
+        super.init(frame: .zero)
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -28,7 +35,13 @@ final class LabelWithPostfix: UIView{
         }else {
           label.text = model.title
         }
-        postFixLabel.text = model.postFix.rawValue
+        var postFix = model.postFix.rawValue
+        switch display {
+        case .lowerCase: postFix = postFix.lowercased()
+        case .capital: postFix = postFix.uppercased()
+        }
+        
+        postFixLabel.text = postFix
     }
     
     
@@ -54,7 +67,6 @@ final class LabelWithPostfix: UIView{
         NSLayoutConstraint.activate([top, leading, bottom])
         
         label.textColor = .customRed
-        label.font = .boldSystemFont(ofSize: 32)
         
     }
     
@@ -62,13 +74,12 @@ final class LabelWithPostfix: UIView{
         addSubview(postFixLabel)
         
         postFixLabel.translatesAutoresizingMaskIntoConstraints = false
-        let bottom = postFixLabel.bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: -3)
-        let leading  = postFixLabel.leadingAnchor.constraint(equalTo: label.trailingAnchor)
+        let bottom = postFixLabel.bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: baseLineAdjustment)
+        let leading  = postFixLabel.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 3)
         let trailing = postFixLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         NSLayoutConstraint.activate([bottom, leading, trailing])
         
         postFixLabel.textColor = .lightDimmedBlue
-        postFixLabel.font = .boldSystemFont(ofSize: 16)
     }
 }
 
@@ -79,9 +90,14 @@ extension LabelWithPostfix {
     }
     
     enum Postfix: String {
-        case min
-        case sec
-        case exercise
+        case minutes
+        case second
+        case exercises
+    }
+    
+    enum Display {
+        case capital
+        case lowerCase
     }
 }
 

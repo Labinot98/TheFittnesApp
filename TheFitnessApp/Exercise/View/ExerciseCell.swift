@@ -12,9 +12,19 @@ class ExerciseCell: UITableViewCell {
     
     
     private let containerView = ContainerView()
-     private let minLabel = LabelWithPostfix()
-    private let  secLabel = LabelWithPostfix()
-     private let titleLabel = UILabel()
+    private let titleLabel = UILabel()
+    private let minLabel = LabelWithPostfix(
+        labelSize: 16,
+        postFixSize: 16,
+        baseLineAdjustment: 0,
+        display: .capital
+    )
+    private let  secLabel = LabelWithPostfix(
+        labelSize: 16,
+        postFixSize: 16,
+        baseLineAdjustment: 0,
+        display: .capital
+        )
    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,10 +39,10 @@ class ExerciseCell: UITableViewCell {
     func set(model: ExerciseModel) {
         titleLabel.text = model.title
         
-        let minLabelModel = LabelWithPostfix.Model(title: model.min.description, postFix: .min )
+        let minLabelModel = LabelWithPostfix.Model(title: model.min.description, postFix: .minutes )
         minLabel.set(model: minLabelModel)
         
-        let secLabelModel = LabelWithPostfix.Model(title: model.sec.description, postFix: .sec)
+        let secLabelModel = LabelWithPostfix.Model(title: model.sec.description, postFix: .second)
         secLabel.set(model: secLabelModel)
     }
     
@@ -44,9 +54,9 @@ class ExerciseCell: UITableViewCell {
         selectionStyle = .none
         
         setupContainerView()
+        setupNameLabel()
         setupMinLabel()
         setupSecLabel()
-        setupNameLabel()
     }
     
     private func setupContainerView() {
@@ -60,35 +70,38 @@ class ExerciseCell: UITableViewCell {
         NSLayoutConstraint.activate([top, leading, bottom , trailing])
     }
     
+    private func setupNameLabel() {
+        containerView.addSubview(titleLabel)
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        let top = titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant : 20)
+        let leading = titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 30)
+        let trailing = titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -30)
+        
+        NSLayoutConstraint.activate([top,leading, trailing])
+        
+        titleLabel.textColor = .customWhite
+        titleLabel.font = .systemFont(ofSize: 32)
+        titleLabel.adjustsFontSizeToFitWidth = true
+    }
+    
     private func setupMinLabel() {
          containerView.addSubview(minLabel)
         minLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+        let top = minLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10)
         let leading = minLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 30)
-        let centerY = minLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
-        NSLayoutConstraint.activate([leading, centerY])
+        let bottom = minLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -30)
+        NSLayoutConstraint.activate([top,  leading, bottom])
     }
     
     private func setupSecLabel() {
         containerView.addSubview(secLabel)
         
         secLabel.translatesAutoresizingMaskIntoConstraints = false
+        let top = secLabel.topAnchor.constraint(equalTo: minLabel.topAnchor)
         let leading = secLabel.leadingAnchor.constraint(equalTo: minLabel.trailingAnchor, constant: 15)
-        let centerY = secLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
-        NSLayoutConstraint.activate([leading, centerY])
-    }
-    
-    private func setupNameLabel() {
-        containerView.addSubview(titleLabel)
-        
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        let leading = titleLabel.leadingAnchor.constraint(equalTo: secLabel.trailingAnchor, constant: 15)
-        let centerY = titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
-        NSLayoutConstraint.activate([leading, centerY])
-        
-        titleLabel.textColor = .customWhite
-        titleLabel.font = .systemFont(ofSize: 32)
-        titleLabel.adjustsFontSizeToFitWidth = true
+         let bottom = secLabel.bottomAnchor.constraint(equalTo: minLabel.bottomAnchor)
+        NSLayoutConstraint.activate([ top, leading, bottom])
     }
     
 }

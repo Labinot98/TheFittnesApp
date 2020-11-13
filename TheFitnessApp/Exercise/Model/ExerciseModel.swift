@@ -13,13 +13,15 @@ final class ExerciseModel {
     let title: String
     let min: Int
     let sec: Int
+    let kind: Kind
     
-    init(id: Int64? = nil, workoutId: Int64, title: String, min: Int, sec: Int) {
+    init(id: Int64? = nil, workoutId: Int64, title: String, min: Int, sec: Int, kind: Kind) {
         self.id = id
         self.workoutId = workoutId
         self.title = title
         self.min = min
         self.sec = sec
+        self.kind = kind
     }
     func requireID() throws -> Int64 {
         guard let id = id else {
@@ -29,5 +31,11 @@ final class ExerciseModel {
     }
     enum ExerciseError: Error {
         case idWasNil
+        case unsuportedKind
+    }
+    
+    enum Kind: String {
+        case exercise
+        case pause
     }
 }

@@ -12,8 +12,8 @@ final class WorkoutCell: UITableViewCell {
     private let containerView = ContainerView()
     private let stackView = UIStackView()
     private let titleLabel = UILabel()
-    private let timeLabel = LabelWithPostfix()
-    private let exerciseLabel = LabelWithPostfix()
+    private let timeLabel = LabelWithPostfix(display: .capital)
+    private let exerciseLabel = LabelWithPostfix(display: .capital)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,10 +27,10 @@ final class WorkoutCell: UITableViewCell {
     // MARK: - Public
     func set(model: WorkoutModel) {
         titleLabel.text = model.title
-        let timeLabelModel = LabelWithPostfix.Model(title: "23", postFix: .min )
+        let timeLabelModel = LabelWithPostfix.Model(title: "23", postFix: .minutes )
         timeLabel.set(model: timeLabelModel)
         
-        let exerciseLabelModel = LabelWithPostfix.Model(title: "11", postFix: .exercise )
+        let exerciseLabelModel = LabelWithPostfix.Model(title: "11", postFix: .exercises )
         exerciseLabel.set(model: exerciseLabelModel)
     }
     
@@ -94,7 +94,7 @@ final class WorkoutCell: UITableViewCell {
             let leading = timeLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor)
            // let height = timeLabel.heightAnchor.constraint(equalTo: container.heightAnchor)
             NSLayoutConstraint.activate([top, leading])
-            timeLabel.set(model: LabelWithPostfix.Model(title: "22", postFix: .min))
+            timeLabel.set(model: LabelWithPostfix.Model(title: "22", postFix: .minutes))
         }()
         
         let _ = {
@@ -104,7 +104,7 @@ final class WorkoutCell: UITableViewCell {
          //   let height = exerciseLabel.heightAnchor.constraint(equalTo: container.heightAnchor)
             NSLayoutConstraint.activate([top, leading])
             
-            exerciseLabel.set(model: LabelWithPostfix.Model(title: "8", postFix: .exercise))
+            exerciseLabel.set(model: LabelWithPostfix.Model(title: "8", postFix: .exercises))
         }()
     }
 }
