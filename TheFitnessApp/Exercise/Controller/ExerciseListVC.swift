@@ -98,7 +98,7 @@ final class ExerciseListVC: UIViewController {
             return
         }
         
-        let vc = CreateExerciseVC(workoutId: workoutId)
+        let vc = CreateExerciseVC(mode: .create(workoutId))
         navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -167,7 +167,14 @@ extension ExerciseListVC: UITableViewDelegate {
         }
         deleteAction.backgroundColor = .dimmedBlue
         
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+        let editAciton = UIContextualAction(style: .normal, title: "Edit") { action, view, completion in
+            let model = self.exerciseList.list[indexPath.row]
+            let vc = CreateExerciseVC(mode: .edit(model))
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }
+        editAciton.backgroundColor = .dimmedBlue
+        return UISwipeActionsConfiguration(actions: [deleteAction, editAciton])
     }
     
 }

@@ -103,8 +103,19 @@ final class ExerciseRepository {
     func delete(request: DeleteExerciseRequest) throws {
         let exercise = ExerciseRepository.table.filter(ExerciseRepository.id == request.exerciseId)
         try db.run(exercise.delete())
-        
     }
+    
+    // UPDATE
+    func update(request: UpdateExerciseRequest) throws  {
+        let exercise = ExerciseRepository.table.filter(ExerciseRepository.id == request.id!)
+        try db.run(exercise.update(
+            ExerciseRepository.title <- request.title,
+            ExerciseRepository.min <- request.min,
+            ExerciseRepository.sec <- request.sec,
+            ExerciseRepository.kind <- request.kind.rawValue
+        ))
+    }
+    
     
 }
 

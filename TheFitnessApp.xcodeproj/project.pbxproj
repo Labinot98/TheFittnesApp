@@ -13,6 +13,9 @@
 		FA0B76902514E81C0098103F /* ListWorkoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0B768F2514E81C0098103F /* ListWorkoutResponse.swift */; };
 		FA0B76942514EB030098103F /* ListWorkoutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0B76932514EB030098103F /* ListWorkoutRequest.swift */; };
 		FA0B769625151C800098103F /* MockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0B769525151C800098103F /* MockDataManager.swift */; };
+		FA1919A5255EB555001B93BF /* UpdateExerciseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1919A4255EB555001B93BF /* UpdateExerciseRequest.swift */; };
+		FA1919A825600D1E001B93BF /* NeuTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1919A725600D1E001B93BF /* NeuTextFieldDelegate.swift */; };
+		FA1919AA25601672001B93BF /* UpdateExercsieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1919A925601672001B93BF /* UpdateExercsieResponse.swift */; };
 		FA1C5AD7251B20690034E0F5 /* WorkoutDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5AD6251B20690034E0F5 /* WorkoutDispatcher.swift */; };
 		FA1C5AD9251B25C50034E0F5 /* CreateWorkoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5AD8251B25C50034E0F5 /* CreateWorkoutResponse.swift */; };
 		FA1C5ADD251CEC020034E0F5 /* CreateWorkoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C5ADC251CEC020034E0F5 /* CreateWorkoutVC.swift */; };
@@ -60,6 +63,9 @@
 		FA0B768F2514E81C0098103F /* ListWorkoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWorkoutResponse.swift; sourceTree = "<group>"; };
 		FA0B76932514EB030098103F /* ListWorkoutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWorkoutRequest.swift; sourceTree = "<group>"; };
 		FA0B769525151C800098103F /* MockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataManager.swift; sourceTree = "<group>"; };
+		FA1919A4255EB555001B93BF /* UpdateExerciseRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateExerciseRequest.swift; sourceTree = "<group>"; };
+		FA1919A725600D1E001B93BF /* NeuTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuTextFieldDelegate.swift; sourceTree = "<group>"; };
+		FA1919A925601672001B93BF /* UpdateExercsieResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateExercsieResponse.swift; sourceTree = "<group>"; };
 		FA1C5AD6251B20690034E0F5 /* WorkoutDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDispatcher.swift; sourceTree = "<group>"; };
 		FA1C5AD8251B25C50034E0F5 /* CreateWorkoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWorkoutResponse.swift; sourceTree = "<group>"; };
 		FA1C5ADC251CEC020034E0F5 /* CreateWorkoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWorkoutVC.swift; sourceTree = "<group>"; };
@@ -135,6 +141,15 @@
 				FA0B7688250A81FA0098103F /* WorkoutRepository.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		FA1919A625600CE4001B93BF /* NeuTextField */ = {
+			isa = PBXGroup;
+			children = (
+				FA1C5B42253F29850034E0F5 /* NeuTextField.swift */,
+				FA1919A725600D1E001B93BF /* NeuTextFieldDelegate.swift */,
+			);
+			path = NeuTextField;
 			sourceTree = "<group>";
 		};
 		FA1C5AD3251B1F640034E0F5 /* Dispatcher */ = {
@@ -230,6 +245,7 @@
 				FA1C5AFC252719A50034E0F5 /* CreateExerciseRequest.swift */,
 				FA1C5B02252723720034E0F5 /* ListExerciseRequest.swift */,
 				FA1C5B462540856E0034E0F5 /* DeleteExerciseRequest.swift */,
+				FA1919A4255EB555001B93BF /* UpdateExerciseRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -240,6 +256,7 @@
 				FA1C5B00252723390034E0F5 /* ListExerciseResponse.swift */,
 				FA1C5B0425272C0A0034E0F5 /* CreateExerciseResponse.swift */,
 				FA1C5B48254087200034E0F5 /* DeleteExerciseResponse.swift */,
+				FA1919A925601672001B93BF /* UpdateExercsieResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -247,12 +264,12 @@
 		FA1C5B41253F28F20034E0F5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FA1919A625600CE4001B93BF /* NeuTextField */,
 				FACFFEBC2550590D00705D2A /* NeuTimeTextField */,
 				FA1C5AE0251F3F5E0034E0F5 /* TextField.swift */,
 				FA1C5ADE251DD6AC0034E0F5 /* SaveCancelButtons.swift */,
 				FA74BE282508A1E9008E74FB /* LabelWithPostfix.swift */,
 				FA74BE262507941B008E74FB /* ContainerView.swift */,
-				FA1C5B42253F29850034E0F5 /* NeuTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -493,14 +510,17 @@
 				FA0B768E250B60630098103F /* CreateWorkoutRequest.swift in Sources */,
 				FA1C5AED25232CE60034E0F5 /* ExerciseListVC.swift in Sources */,
 				FA1C5AE3251FAC8F0034E0F5 /* UIView+Shadow.swift in Sources */,
+				FA1919A825600D1E001B93BF /* NeuTextFieldDelegate.swift in Sources */,
 				FA0B76902514E81C0098103F /* ListWorkoutResponse.swift in Sources */,
 				FA1C5ADF251DD6AC0034E0F5 /* SaveCancelButtons.swift in Sources */,
 				FA9891EA25446FB500088AFC /* NeuTimeTextField.swift in Sources */,
 				FA1C5AE5252223090034E0F5 /* UpdateWorkoutRequest.swift in Sources */,
 				FA0B76942514EB030098103F /* ListWorkoutRequest.swift in Sources */,
 				FA1C5AE7252227FE0034E0F5 /* UpdateWorkoutResponse.swift in Sources */,
+				FA1919AA25601672001B93BF /* UpdateExercsieResponse.swift in Sources */,
 				FACFFEC02550598C00705D2A /* NeuTimeTextFieldDelegate.swift in Sources */,
 				FA1C5B452540484D0034E0F5 /* CreateExerciseVC.swift in Sources */,
+				FA1919A5255EB555001B93BF /* UpdateExerciseRequest.swift in Sources */,
 				FA74BE0C25069834008E74FB /* AppDelegate.swift in Sources */,
 				FA1C5AFB2524A1B00034E0F5 /* ExerciseModel.swift in Sources */,
 				FA1C5B03252723720034E0F5 /* ListExerciseRequest.swift in Sources */,

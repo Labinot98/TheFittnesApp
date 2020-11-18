@@ -10,9 +10,9 @@ import UIKit
 
 final class CreateExerciseVC: UIViewController {
     
-    var workoutId: Int64
     
-    private var createExerciseRequest: CreateExerciseRequest
+    private var createExerciseRequest: CreateExerciseRequest?
+    private var updateExerciseRequest: UpdateExerciseRequest?
     
     private var safeArea: UILayoutGuide!
     private let nameTextField = NeuTextField(title: "Name")
@@ -22,17 +22,30 @@ final class CreateExerciseVC: UIViewController {
     private let saveCancelButton = SaveCancelButtons()
     
     private let exerciseDispatcher = try? ExerciseDispatcher()
+    private var mode: Mode
+    private var exerciseModel: ExerciseModel?
     
-    init(workoutId: Int64) {
-        self.workoutId = workoutId
-        self.createExerciseRequest = CreateExerciseRequest(
-            workoutId: workoutId,
-            title: "",
-            min: 0,
-            sec: 0,
-            kind: .exercise
-        )
-        super.init(nibName: nil, bundle: nil)
+    enum Mode {
+        case create(Int64)
+        case edit (ExerciseModel)
+    }
+    
+    init(mode: Mode) {
+        self.mode = mode
+         super.init(nibName: nil, bundle: nil)
+        switch mode {
+        case .create(let workoutId):
+            self.createExerciseRequest = CreateExerciseRequest(
+                workoutId: workoutId,
+                title: "",
+                min: 0,
+                sec: 0,
+                kind: .exercise
+            )
+        case .edit(let exerciseModel):
+            self.setupData(with: exerciseModel)
+        }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -70,6 +83,7 @@ final class CreateExerciseVC: UIViewController {
         let trailing = nameTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
         NSLayoutConstraint.activate([top, leading, trailing])
         
+        nameTextField.delegate = self
     }
     private func setupTimeTextField() {
         
@@ -121,8 +135,12 @@ final class CreateExerciseVC: UIViewController {
         NSLayoutConstraint.activate([top, leading, trailing])
         
         exercisePauseControl.tintColor = .customWhite
-        exercisePauseControl.selectedSegmentIndex = SegmentedControlItem.exercise.rawValue
         exercisePauseControl.addTarget(self, action: #selector(exercisePauseAction), for: .valueChanged)
+    
+        switch mode {
+        case .create(_): exercisePauseControl.selectedSegmentIndex = SegmentedControlItem.exercise.rawValue
+        default: return
+        }
     }
     
     // MARK: - Action
@@ -132,40 +150,96 @@ final class CreateExerciseVC: UIViewController {
         if let title = control.titleForSegment(at: control.selectedSegmentIndex),
             let controlItem = ExerciseModel.Kind(rawValue: title.lowercased())
         {
-            createExerciseRequest.kind = controlItem
+            switch mode {
+            case .create(_): createExerciseRequest?.kind = controlItem
+            case .edit(_): updateExerciseRequest?.kind = controlItem
+            }
         }
     }
     
     // MARK: - Logic
     
-    private func createExercise() {
+    private func setupData(with model: ExerciseModel) {
+        nameTextField.set(name: model.title)
+        let timeModel = NeuTimeTextField.Model(min: model.min, sec: model.sec)
+        timeTextField.set(with: timeModel)
         
-        guard let title = nameTextField.text, !title.isEmpty else {
-            print("Title cannot be empty {Model}")
+        guard let segmentetIndex = SegmentedControlItem(kind: model.kind)?.rawValue else {
+            print("❌ Could not populate Exercise/Pause Segmenterd control based on \(model.kind)")
             return
         }
-        createExerciseRequest.title = title
+        exercisePauseControl.selectedSegmentIndex = segmentetIndex
+        
+        guard let exerciseId = model.id else {
+            print("❌ Exercise Id qas nil in model: ", model)
+            return
+        }
+        
+        self.updateExerciseRequest = UpdateExerciseRequest(
+            id: exerciseId,
+            title: model.title,
+            min: model.min,
+            sec: model.sec,
+            kind: model.kind
+        )
+    }
+    
+    private func createExercise() {
+        
+
         
         // VALIDATION createExreciseRequest before persisting
+        
+        
         guard let dispatcher = exerciseDispatcher else {
             print("\(self): workoutDispatcher was nil")
             return
         }
+        guard let request = createExerciseRequest else  {
+            print("\(self): createExerciseRequest was nil")
+            return
+        }
         
-        guard ((try? dispatcher.create(request: createExerciseRequest)) != nil) else {
+        guard ((try? dispatcher.create(request: request)) != nil) else {
             print("Show Modal saying: 'Could't save workout, please reach oit to Developer ")
             return
         }
         
         navigationController?.popViewController(animated: true)
     }
+    
+    private func updateExercise() {
+        guard let dispatcher = exerciseDispatcher else {
+            print("\(self): workoutDispatcher was nil")
+            return
+        }
+        guard let request = updateExerciseRequest else  {
+            print("\(self): updateExerciseRequest was nil")
+            return
+        }
+        
+        guard ((try? dispatcher.update(request: request)) != nil) else {
+            print("Show Modal saying: 'Could't save workout, please reach oit to Developer ")
+            return
+        }
+        
+        navigationController?.popViewController(animated: true)
+        print("call update funccc")
+    }
+    
 }
 
 // E kena bo ni protocol se mena delegu te dhenat nga NeuTimeTF
 extension CreateExerciseVC: NeuTimeTextFieldDelegate {
     func valuesDidChange(to min: Int, sec: Int) {
-        createExerciseRequest.min = min
-        createExerciseRequest.sec = sec
+        switch mode {
+        case .create(_):
+            createExerciseRequest?.min = min
+            createExerciseRequest?.sec = sec
+        case .edit(_):
+            updateExerciseRequest?.min = min
+            updateExerciseRequest?.sec = sec
+        }
     }
 }
 
@@ -175,7 +249,11 @@ extension CreateExerciseVC: SaveCancelButtonDelegate {
     }
     
     func onSave() {
-        createExercise()
+        
+        switch mode {
+        case .create(_): createExercise()
+        case .edit(_): updateExercise()
+        }
     }
 }
 
@@ -190,10 +268,24 @@ extension CreateExerciseVC {
             case .pause: return "pause"
             }
         }
+        
+        init?(kind: ExerciseModel.Kind) {
+            switch kind {
+            case .exercise: self.init(rawValue: 0)
+            case .pause: self.init(rawValue: 1)
+            }
+        }
     }
 }
 
-
+extension CreateExerciseVC: NeuTextFieldDelegate {
+    func valuesDidChange(to text: String) {
+        switch mode {
+        case .create(_): createExerciseRequest?.title = text
+        case .edit(_): updateExerciseRequest?.title = text
+        }
+    }
+}
 
 
 

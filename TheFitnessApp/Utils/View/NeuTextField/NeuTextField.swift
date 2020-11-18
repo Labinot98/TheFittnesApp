@@ -9,10 +9,7 @@
 import UIKit
 
 final class NeuTextField: UIView {
-    var text: String?
-    
-    private var minutes = 0
-    private var seconds = 0
+    weak var delegate: NeuTextFieldDelegate?
     
     private let titleLabel = UILabel()
     private let nameTF = TextField()
@@ -31,10 +28,10 @@ final class NeuTextField: UIView {
     }
     
     // MARK: - Public
-    func set(title: String) {
-        text = title
-        nameTF.text = title
+    func set(name: String) {
+        nameTF.text = name
     }
+    
     
     //MARK: - Private
     
@@ -83,7 +80,12 @@ final class NeuTextField: UIView {
     }
     
     @objc func textFieldAction(_ textField: UITextField) {
-        text = textField.text
+        
+        guard let delegate = delegate else {
+           print("⚠️ No Delegate set for \(self)")
+            return
+        }
+         delegate.valuesDidChange(to: textField.text ?? "")
     }
 }
 

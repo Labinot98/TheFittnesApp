@@ -15,6 +15,7 @@ final class NeuTimeTextField: UIView {
     private let minTF = TextField()
     private let secLabel = UILabel()
     private let secTF = TextField()
+    private var model: Model?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,6 +25,23 @@ final class NeuTimeTextField: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    // MARK: - Public
+    func set(with model: Model) {
+        self.minTF.text = model.min.description
+        self.secTF.text = model.sec.description
+        
+        if let inputView = minTF.inputView, let minPicker = inputView as? UIPickerView {
+            minPicker.selectRow(model.min, inComponent: 0, animated: true)
+        }
+        if let inputView = secTF.inputView, let secPicker = inputView as? UIPickerView {
+            secPicker.selectRow(model.sec/5, inComponent: 0, animated: true)
+        }
+    }
+    
+    
+    // MARK: - Private
     
     private func setupView() {
         setupMinLabel()
@@ -177,6 +195,12 @@ extension NeuTimeTextField: UIPickerViewDelegate {
     }
 }
 
+extension NeuTimeTextField {
+    struct Model {
+        let min: Int
+        let sec: Int
+    }
+}
 
 
 

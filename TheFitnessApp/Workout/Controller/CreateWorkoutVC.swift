@@ -16,6 +16,8 @@ final class CreateWorkoutVC: UIViewController {
     
     private var mode: Mode
     private var workoutModel: WorkoutModel?
+    private var createWorkoutRequest: CreateWorkoutRequest?
+    private var updateWorkoutRequest: UpdateWorkoutRequest?
     
     enum Mode {
         case create
@@ -29,7 +31,7 @@ final class CreateWorkoutVC: UIViewController {
         case .create: ()
         case .edit(let workoutModel):
             self.workoutModel = workoutModel
-            nameTextField.set(title: workoutModel.title)
+            nameTextField.set(name: workoutModel.title)
         }
           super.init(nibName: nil, bundle: nil)
     }
@@ -86,6 +88,7 @@ final class CreateWorkoutVC: UIViewController {
         let trailing = nameTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor)
         NSLayoutConstraint.activate([top, leading, trailing])
         
+        nameTextField.delegate = self
     }
     
     private func setupSaveCancelButtons() {
@@ -103,32 +106,32 @@ final class CreateWorkoutVC: UIViewController {
     
     // MARK: - Logic
     
-    private func createWorkout(title: String) {
-        let request = CreateWorkoutRequest(title: title)
-        guard let dispatcher = workoutDispatcher else {
+    private func createWorkout() {
+        guard
+            let createRequest = createWorkoutRequest,
+            let dispatcher = workoutDispatcher
+            else {
             print("\(self): workoutDispatcher was nil")
             return
         }
         
-        guard ((try? dispatcher.create(request: request)) != nil) else {
+        guard ((try? dispatcher.create(request: createRequest)) != nil) else {
             print("Show Modal saying: 'Could't save workout, please reach oit to Developer ")
             return
         }
     }
     
     // Edit Workout
-    private func updateWorkout(title: String) {
+    private func updateWorkout() {
         guard
-            let model = workoutModel,
-            let id = model.id,
+            let updateRequest = updateWorkoutRequest,
             let dispatcher = workoutDispatcher
             else {
             print("\(self): wokroutModel or workoutDispatcher is nil")
             return
         }
-        let request = UpdateWorkoutRequest(id: id, newTitle: title)
         
-        guard ((try? dispatcher.update(request: request)) != nil) else {
+        guard ((try? dispatcher.update(request: updateRequest)) != nil) else {
             print("Show Modal saying: 'Could't save workout, please reach oit to Developer ")
             return
         }
@@ -149,20 +152,32 @@ extension CreateWorkoutVC: SaveCancelButtonDelegate {
     }
     
     func onSave() {
-        if let title = nameTextField.text, !title.isEmpty {
-            print(" ✅ Persisted to database")
-            
-            switch mode {
-            case .create: createWorkout(title: title)
-            case .edit(_): updateWorkout(title: title)
-            }
-            
-            
-            navigationController?.popViewController(animated: true)
+        switch mode {
+        case .create: createWorkout()
+        case .edit(_): updateWorkout()
         }
+        navigationController?.popViewController(animated: true)
+            print(" ✅ Persisted to database")
     }
 }
 
+extension CreateWorkoutVC: NeuTextFieldDelegate {
+    func valuesDidChange(to text: String) {
+        switch mode {
+        case .create:   createWorkoutRequest = CreateWorkoutRequest(title: text)
+        case .edit(_):
+            guard
+                let model = workoutModel,
+                let id = model.id
+            else {
+                 print("\(self): wokroutModel was nil")
+                return
+            }
+            
+            updateWorkoutRequest = UpdateWorkoutRequest(id: id, newTitle: text)
+        }
+    }
+}
 
 
 

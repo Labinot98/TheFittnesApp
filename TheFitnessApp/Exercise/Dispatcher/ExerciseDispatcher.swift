@@ -38,13 +38,11 @@ struct ExerciseDispatcher {
         try exerciseRepository.delete(request: request)
         return DeleteExerciseResponse()
     }
-
+    
+    // Update an exercise
+    func update(request: UpdateExerciseRequest) throws -> UpdateExercsieResponse{
+        try exerciseRepository.update(request: request)
+    return UpdateExercsieResponse()
+    }
 }
 
-// mund mebo edhe ktu po ekom bo errorin tek reposistory
-//extension ExerciseDispatcher {
-//    enum ExerciseDispatcherError: Error {
-//        case couldNotGetDatabaseManagerInstance
-//        case couldNotGetExerciseRepositoryInstance
-//    }
-//}
