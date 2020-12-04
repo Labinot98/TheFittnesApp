@@ -32,6 +32,17 @@ final class NeuTextField: UIView {
         nameTF.text = name
     }
     
+    func disable() {
+        nameTF.text = "Pause"
+        nameTF.isEnabled = false
+        nameTF.textColor = .lightGray
+    }
+    func enable() {
+        nameTF.text = ""
+        nameTF.isEnabled = true
+         nameTF.textColor = .customWhite
+    }
+    
     
     //MARK: - Private
     

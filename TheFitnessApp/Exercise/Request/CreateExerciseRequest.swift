@@ -12,4 +12,21 @@ struct CreateExerciseRequest {
     var min: Int
     var sec: Int
     var kind: ExerciseModel.Kind
+    
+    func isValid() -> ValidationError  {
+        if title.isEmpty {
+            return  .titleIsEmpty
+        }
+        
+        if min == 0 && sec == 0 {
+            return .timeCannotBeZero
+        }
+        return .success
+    }
+    
+    enum ValidationError: Error {
+        case titleIsEmpty
+        case timeCannotBeZero
+        case success
+    }
 }

@@ -147,13 +147,22 @@ final class CreateExerciseVC: UIViewController {
     
     @objc private func exercisePauseAction(_ control: UISegmentedControl) {
         
-        if let title = control.titleForSegment(at: control.selectedSegmentIndex),
+        guard
+        let title = control.titleForSegment(at: control.selectedSegmentIndex),
             let controlItem = ExerciseModel.Kind(rawValue: title.lowercased())
-        {
-            switch mode {
-            case .create(_): createExerciseRequest?.kind = controlItem
-            case .edit(_): updateExerciseRequest?.kind = controlItem
-            }
+            else {
+                print("❌\(self): Could'nt instantiante \(ExerciseModel.Kind.self).")
+                return
+        }
+        switch mode {
+        case .create(_): createExerciseRequest?.kind = controlItem
+        case .edit(_): updateExerciseRequest?.kind = controlItem
+        }
+        
+        // mebo enable disable nese e bojm pause segmentin
+        switch controlItem {
+        case .exercise: enableNameField()
+        case .pause: disableNameField()
         }
     }
     
@@ -182,6 +191,14 @@ final class CreateExerciseVC: UIViewController {
             sec: model.sec,
             kind: model.kind
         )
+    }
+    
+    private func disableNameField() {
+        nameTextField.disable()
+        
+    }
+    private func enableNameField() {
+        nameTextField.enable()
     }
     
     private func createExercise() {
